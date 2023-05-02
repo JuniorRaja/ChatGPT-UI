@@ -4,6 +4,11 @@ import ChatInput from "./Components/ChatInput";
 
 function App() {
   const [chat, setChat] = useState([]);
+
+  const sendMessage = async (message) => {
+    await Promise.resolve(setChat((prev) => [...prev, message]));
+  };
+
   return (
     <div
       className="bg-[#1a232e] h-screen py-6 relative sm:px-16 px-12
@@ -17,7 +22,7 @@ function App() {
         <ChatBody chat={chat} />
       </div>
       <div className="w-full max-w-4xl min-w-[20rem] self-center">
-        <ChatInput />
+        <ChatInput sendMessage={sendMessage} />
       </div>
     </div>
   );
