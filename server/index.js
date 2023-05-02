@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const Config = new Configuration({
-  organization: "org-bOagEdfYA6gwQGOXoEYX3rBV",
+  organization: "org-AeUqQWD6u2zlF4dvoNrNDP8I",
   apiKey: process.env.API_KEY,
 });
 
@@ -22,7 +22,7 @@ const openAI = new OpenAIApi(Config);
 app.listen("3080", () => console.log("Listening on port 3080"));
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Basic Message");
 });
 
 app.post("/", async (req, res) => {
@@ -30,15 +30,15 @@ app.post("/", async (req, res) => {
 
   try {
     const response = await openAI.createCompletion({
-      model: "text-devinci-003",
+      model: "text-davinci-003",
       prompt: `${message}`,
       max_tokens: 100,
       temperature: 0.5,
     });
 
-    res.json({ message: response.data.choices[0].value }).status(200);
+    res.json({ message: response.data.choices[0].text });
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
     res.send(e).status(400);
   }
 });
